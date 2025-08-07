@@ -299,28 +299,29 @@ Claro! Aqui está um trecho pronto para você **copiar e colar no seu `README.md
 #### Opções para simular falhas:
 
 1. **E-mail específico para falha simulada**
-   Ao utilizar o e-mail `error@test.com` como destinatário em qualquer requisição, a aplicação lançará uma exceção proposital, simulando uma falha no envio.
-
-   > Exemplo de payload para `/auth/recover`:
+   Fazer um POST para rota `/recover`  utilizando o e-mail `error@test.com` como destinatário em qualquer requisição, a aplicação lançará uma exceção proposital, simulando uma falha no envio.
 
    ```json
    {
      "email": "error@test.com"
    }
    ```
-
 2. **Desabilitar ou bloquear o serviço SMTP**
-   Você também pode simular falhas reais no ambiente de envio de e-mails:
+  Também é possivel simular falhas reais no ambiente de envio de e-mails:
 
-   * Desconectando da internet.
-   * Configurando variáveis de ambiente com credenciais SMTP inválidas.
-   * Utilizando um servidor SMTP inválido ou inexistente no `.properties` ou `.env`.
+   * Configurando variáveis de ambiente com credenciais SMTP inválidas, exemplo: Username errado.
+   * Utilizando um servidor SMTP inválido ou inexistente no `.properties`.
 
    Isso forçará o JavaMailSender a lançar uma exceção, que será capturada e logada.
 
----
-
-Se quiser, posso revisar seu `README` completo e garantir que ele fique bem estruturado e profissional. Deseja isso?
+3. **Rodar o teste unitario da classe EmailService**
+    ```bash
+    src/test/java/com.example.../auth.security
+    ├── EmailServiceTest       #Execute a classe
+    ````
+   Esse teste valida dois comportamentos principais do serviço de e-mail:
+   - Envio bem-sucedido:Verifica se o método responsável por enviar o e-mail (JavaMailSender.send) é chamado corretamente e se o log da operação é salvo.
+   - Falha simulada: Quando o destinatário é `error@test.com`, o teste verifica se o serviço lança uma exceção, simulando uma falha no envio. Essa exceção é capturada e registrada no log pela aplicação.
 
 ---
 
