@@ -290,6 +290,40 @@ Cada envio de e-mail (com sucesso ou falha) é registrado com:
 
 ---
 
+Claro! Aqui está um trecho pronto para você **copiar e colar no seu `README.md`**, explicando como simular falhas no envio de e-mail — algo importante para testes, observabilidade e validação de logs.
+
+---
+
+### Como simular falhas no envio de e-mail
+
+#### Opções para simular falhas:
+
+1. **E-mail específico para falha simulada**
+   Ao utilizar o e-mail `error@test.com` como destinatário em qualquer requisição, a aplicação lançará uma exceção proposital, simulando uma falha no envio.
+
+   > Exemplo de payload para `/auth/recover`:
+
+   ```json
+   {
+     "email": "error@test.com"
+   }
+   ```
+
+2. **Desabilitar ou bloquear o serviço SMTP**
+   Você também pode simular falhas reais no ambiente de envio de e-mails:
+
+   * Desconectando da internet.
+   * Configurando variáveis de ambiente com credenciais SMTP inválidas.
+   * Utilizando um servidor SMTP inválido ou inexistente no `.properties` ou `.env`.
+
+   Isso forçará o JavaMailSender a lançar uma exceção, que será capturada e logada.
+
+---
+
+Se quiser, posso revisar seu `README` completo e garantir que ele fique bem estruturado e profissional. Deseja isso?
+
+---
+
 ## 🧪 Teste com Front-End
 
 > [Link para o repositório do Front-End](https://github.com/RonaldoFidelis/DT-FRONT)
