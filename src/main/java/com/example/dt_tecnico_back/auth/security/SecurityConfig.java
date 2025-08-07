@@ -37,7 +37,9 @@ public class SecurityConfig {
                         // 👇 Permite as rotas públicas
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        // 👇 Permite requisições OPTIONS (preflight)
+                        .requestMatchers(HttpMethod.POST, "/auth/recover").permitAll()
+                        //.requestMatchers(HttpMethod.GET, "/auth/log").permitAll()
+                        // 👇 Permite requisições OPTIONS
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )

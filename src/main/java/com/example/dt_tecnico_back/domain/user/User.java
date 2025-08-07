@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 /** Classe que representa o usuário dentro do DB
  * Atributos do usuario: ID, NAME, EMAIL E PASSWORD
  * Todos os atributos serão privados
@@ -23,5 +25,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private String resetToken;
+    private LocalDateTime tokenExpiration;
 
 }

@@ -1,4 +1,4 @@
 package com.example.dt_tecnico_back.dto;
 
-public record ResponseDTO(String name, String token) {
+public record ResponseDTO(String email, String name, String token) {
 }
