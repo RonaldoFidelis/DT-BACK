@@ -44,7 +44,8 @@ public class EmailService {
             log.setStatus("ERROR");
             log.setError(e.getMessage());
             throw e;
+        } finally {
+            emailLogRepository.save(log);
         }
-        emailLogRepository.save(log);
     }
 }

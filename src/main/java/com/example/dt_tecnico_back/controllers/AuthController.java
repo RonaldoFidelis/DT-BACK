@@ -84,12 +84,17 @@ public class AuthController {
         String resetLinkPassword = "Link de redefinição de senha=" + token;
 
         String messageEmail = String.format("Olá! %s, clique no link para redefinir a sua senha: %s", user.getName(), resetLinkPassword);
-        emailService.sendEmail(new Email(
-                user.getEmail(),
-            "Redefinição de senha",
-                messageEmail
-        ));
-        return ResponseEntity.ok("E-mail enviado com instruções de recuperação.");
+        try {
+            emailService.sendEmail(new Email(
+                    user.getEmail(),
+                    "Redefinição de senha",
+                    messageEmail
+            ));
+            return ResponseEntity.ok("E-mail enviado com instruções de recuperação.");
+        } catch (Exception  e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao enviar o e-mail: " + e.getMessage());
+        }
     }
 
     @GetMapping("/log")
