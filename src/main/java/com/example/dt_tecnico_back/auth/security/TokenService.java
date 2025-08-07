@@ -12,19 +12,21 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-/** Conceito
- *  Desenvolver um component, que fique responsavel por gerar e
+/** Conceito da classe:
+ *
+ *  Desenvolver um component, que fique responsável por gerar e
  *  validar os tokens JWT.
  *
  *  Vai ter três métodos:
  *
- *  generatedToken() -> que vai ser responsavel por gerar o token e devolver ao usuário
+ *  generatedToken() -> que vai ser responsável por gerar o token e devolver ao usuário
  *  no momento do login e/ou cadastro.
  *
- *  generatedTokenTime() -> vai gerar um prazo de validade para o token
+ *  generatedTokenTime() -> vai gerar um prazo de validade para o token.
  *
  *  validateToken -> vai validar o token no momento do login e retorna o atributo ao qual
- *  o token foi "vinculado"
+ *  o token foi "vinculado".
+ *
  * */
 @Service
 public class TokenService {

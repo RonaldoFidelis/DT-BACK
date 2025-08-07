@@ -9,6 +9,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+/**
+ * Implementação customizada da interface, utilizada pelo Spring Security
+ * para carregar detalhes do usuário durante o processo de autenticação.
+ *
+ * A classe busca o usuário no banco de dados a partir do e-mail fornecido e retorna
+ * uma instância, que contém as credenciais e permissões.
+ */
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {

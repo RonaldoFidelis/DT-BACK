@@ -24,6 +24,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Controlador responsável pelas operações de autenticação, registro de usuários,
+ * recuperação de senha e visualização de logs de envio de e-mail.
+ *
+ * URL base /auth, esse controller lida com endpoints públicos da aplicação.
+ */
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor

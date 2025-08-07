@@ -8,7 +8,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-
+/**
+ * Serviço responsável pelo envio de e-mails e registro de logs relacionados.
+ *
+ * Essa classe utiliza o JavaMailSender para enviar e-mails do tipo texto simples e
+ * registra todas as tentativas de envio (bem-sucedidas ou com erro) no banco de dados
+ * através do EmailLogRepository.
+ *
+ */
 @Service
 public class EmailService {
     private final JavaMailSender mailSender;

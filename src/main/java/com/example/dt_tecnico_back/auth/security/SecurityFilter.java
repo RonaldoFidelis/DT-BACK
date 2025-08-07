@@ -14,7 +14,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
-
+/**
+ * Filtro de segurança que intercepta todas as requisições HTTP uma única vez por request
+ * para realizar a autenticação baseada em token JWT.
+ *
+ * Se o token JWT for válido, o usuário correspondente será carregado do banco de dados e
+ * autenticado no contexto de segurança do Spring.
+ *
+ * Este filtro é executado antes dos endpoints da aplicação, garantindo que somente usuários
+ * autenticados tenham acesso as rotas protegidas.
+ *
+ */
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
