@@ -162,6 +162,115 @@ src/main/java/com.example...
 
 ---
 
+## Rotas da API
+
+### `/auth/register`
+
+**Método:** `POST`
+**Descrição:** Registra um novo usuário.
+**Corpo esperado (JSON):**
+
+```json
+{
+  "name": "João Silva",
+  "email": "joao@email.com",
+  "password": "123456"
+}
+```
+
+**Resposta (200):**
+
+```json
+{
+  "name": "João Silva",
+  "email": "joao@email.com",
+  "token": "jwt-token-gerado"
+}
+```
+
+---
+
+### 🔐 `/auth/login`
+
+**Método:** `POST`
+**Descrição:** Realiza login de usuário.
+**Corpo esperado (JSON):**
+
+```json
+{
+  "email": "joao@email.com",
+  "password": "123456"
+}
+```
+
+**Resposta (200):**
+
+```json
+{
+  "name": "João Silva",
+  "email": "joao@email.com",
+  "token": "jwt-token-gerado"
+}
+```
+
+---
+
+### 🔐 `/auth/recover`
+
+**Método:** `POST`
+**Descrição:** Inicia processo de recuperação de senha.
+**Corpo esperado (JSON):**
+
+```json
+{
+  "email": "joao@email.com"
+}
+```
+
+**Resposta (200):**
+
+```
+"E-mail enviado com instruções de recuperação."
+```
+
+**Resposta (404):**
+
+```
+"Usuário não encontrado"
+```
+
+---
+
+### 📜 `/auth/log`
+
+**Método:** `GET`
+**Descrição:** Retorna lista de tentativas de envio de e-mail.
+
+**Cabeçalhos:**
+
+```
+Authorization: Bearer <jwt-token>
+```
+
+**Resposta (200):**
+
+```json
+[
+  {
+    "recipient": "joao@email.com",
+    "status": "SUCESS",
+    "error": null,
+    "dateSend": "2025-08-07T15:42:12.512"
+  },
+  {
+    "recipient": "erro@test.com",
+    "status": "ERROR",
+    "error": "Erro simulado no envio de e-mail: e-mail:erro@test.com não é valido.",
+    "dateSend": "2025-08-07T15:45:03.141"
+  }
+]
+```
+
 ## 🔒 Segurança
 
 * **JWT Token** é capturado ao logar e enviado via `Authorization: Bearer <token>`.
@@ -193,10 +302,65 @@ VITE_API_URL=http://localhost:8080/auth
 
 ---
 
+### 1. **Como você lida com falhas no envio de e-mail? Qual é a lógica de retry?**
+
+As falhas no envio de e-mails são tratadas capturando exceções como `sendEmail`. Quando ocorre uma falha, o sistema:
+
+* Registra a tentativa com status `ERROR` no banco de dados.
+* Armazena a descrição do erro.
+* Permite o reenvio manual posteriormente via painel administrativo.
+
+**retry**:
+
+* Manual (através de botão de reenvio).
+* Foi configurado no front-end, um rety simples, que tenta executar a requisição 1 vez após o intervalo de 5seg. hook `useFetch` método `useRecoverPassword`.
+
+---
+
+### 2. **O que acontece se o provedor SMTP ficar indisponível por um tempo?**
+
+Se o servidor SMTP estiver fora do ar:
+
+* Nenhum e-mail é enviado.
+* O erro é capturado e registrado no log.
+* O status da tentativa fica marcado como `ERROR`.
+
+---
+
+### 3. **Como o reenvio manual é feito sem duplicar efeitos colaterais?**
+
+Cada envio é tratado de forma **idempotente**:
+
+* O e-mail é reenviado com os mesmos dados.
+* Nenhuma nova ação ou alteração de estado é provocada além do envio.
+* O log da nova tentativa é separado, sem sobrescrever o anterior.
+
+Desse modo, não possui duplicações.
+
+---
+
+### 4. **Como o sistema protege credenciais e evita abuso de disparos?**
+
+#### Proteção de Credenciais:
+
+* As credenciais SMTP estão em variáveis de ambiente (`application.properties`).
+#### Prevenção de Abusos:
+
+* As rotas de envio são protegidas por autenticação JWT.
+* Já na API a classe `SecurityFilter` é responsavel por trata as requisições uma de cada vez, uma vez que ela extende `OncePerRequestFilter`.
+* Utilização de ambientes seguros de testes, como o Mailtrap.
+
+---
+
+### 5. **Quais dos diferenciais foram implementados e por quê?**
+
+* Rate limiting: Não cheguei a limitar o número de requisições, mas a classe `SecurityFilter` lida como possiveis abusos.
+* Idempotência e prevenção de duplicidade: Como nenhuma nova ação é realizada, além do reenvio das requisições que deram erradas, o logs antigos não são sobrescrito.
+---
+
 ## 👨‍💻 Autor
 
 * Nome: **Ronaldo Fidelis**
-* [LinkedIn](https://www.linkedin.com/in/seu-usuario)
-* [GitHub](https://github.com/seu-usuario)
+* [LinkedIn](https://www.linkedin.com/in/ronaldo-fidelis-9922941a9/)
 
 
