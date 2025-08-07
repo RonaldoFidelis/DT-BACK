@@ -130,7 +130,7 @@ jwt.secret=seuSegredoJWT
 
 ---
 
-### 4. Instalar dependências
+### 4. Instalar dependências (Se necessário)
 
 Rode o comando, na raiz do projeto.
 
