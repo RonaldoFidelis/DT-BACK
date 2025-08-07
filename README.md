@@ -140,6 +140,17 @@ mvn clean install
 
 ---
 
+### 5. Configuração do CORS
+
+Para que o front-end consiga se comunicar com a API corretamente, é necessário que a porta utilizada pelo front-end esteja liberada no CORS do back-end.
+
+```bash
+src/main/java/com.example.../auth
+├── SecurityConfig       
+````
+Por exemplo, se o front-end estiver rodando em http://localhost:3000, é preciso apontar a mesma rota do arquivo `SecurityConfig`, desse modo: `.allowedOrigins("http://localhost:3000")`
+
+---
 ## ▶️ Executar o projeto
 
 Pela sua IDE (O IntelliJ foi utilizada durante o processo de desenvolvimento).
